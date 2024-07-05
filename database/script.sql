@@ -20,6 +20,7 @@ CREATE TABLE usuarios (
     dni VARCHAR(8) UNIQUE,
     direccion VARCHAR(60),
     fecha_creacion DATETIME NOT NULL,
+    password VARCHAR(255) NOT NULL,
     fecha_actualizacion DATETIME NOT NULL,
     FOREIGN KEY (perfiles_id) REFERENCES perfiles(id)
 );
@@ -74,3 +75,13 @@ INSERT INTO categorias (nombre)
 VALUES  ('Laptops'), 
         ('Sobremesa'), 
         ('Impresoras');
+
+
+-- Vistas
+CREATE or REPLACE VIEW listar_usuarios
+AS
+    select u.id, p.nombre as perfil, u.nombre, u.apellido, u.dni, u.email, u.direccion, u.fecha_creacion, u.fecha_actualizacion
+    from usuarios u
+    inner join perfiles p on u.perfiles_id = p.id
+
+select * from listar_usuarios;

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo (isset($data['titulo'])) ? $data['titulo'] : 'SISTEMA DE GESTIÓN' ?></title>
+    <title><?php echo $titulo ?? 'SISTEMA DE GESTIÓN' ?></title>
     <?php require_once APP . '/views/layouts/head.php' ?>
 </head>
 
-<body>
+<body class="bg-gray-100">
     <?php require_once APP . '/views/layouts/header.php' ?>
     <main class="flex-grow flex items-center justify-center p-4 w-full max-w-screen-xl mx-auto">
         <div class="bg-white p-6 rounded shadow-md w-full">
@@ -35,18 +35,23 @@
     <?php require_once APP . '/views/layouts/scripts.php' ?>
 
     <script>
-        $('#perfiles_form').on("submit", function (event) {
+        // Variables
+        let idFormulario = "#perfiles_form";
+        let rutaStore = "<?php echo BASE_URL . '/perfiles/store' ?>";
+        let rutaUpdate = "<?php echo BASE_URL . '/perfiles/update/:id' ?>"; // marcador :id para reemplazarlo despues con js
+
+        $(idFormulario).on("submit", function (event) {
             event.preventDefault();
 
             let formulario = $(this);
-            let ruta = "<?php echo BASE_URL . '/perfiles/store' ?>"; // por defecto creacion
+            let ruta = rutaStore; // por defecto creacion
             let metodo = "POST";
             let texts = ["Registro", 'Registrado'];
             // verificamos si hay id en el campo oculto para saber si es actualizacion o creacion
             let id = $('#id').val();
 
             if (id) {
-                ruta = "<?php echo BASE_URL . '/perfiles/update/' ?>" + id;
+                ruta = rutaUpdate.replace(':id', id);
                 metodo = "PUT";
                 texts = ["Actualización", "Actualizado"];
             }

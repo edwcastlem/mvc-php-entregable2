@@ -6,8 +6,11 @@ class PaginaController extends Controller
 {
     public function index()
     {
-        $titulo = "HOLA DESDE CONTROLADOR";
+        $this->loadView('index');
+    }
 
-        $this->loadView('index', ['titulo' => $titulo]);
+    public function prueba()
+    {
+        $this->loadView('prueba_forms');
     }
 }

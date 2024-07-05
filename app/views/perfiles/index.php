@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo (isset($data['titulo'])) ? $data['titulo'] : 'SISTEMA DE GESTIÓN' ?></title>
+    <title><?php echo $titulo ?? 'SISTEMA DE GESTIÓN' ?></title>
     <?php require_once APP . '/views/layouts/head.php' ?>
 </head>
 
@@ -46,9 +46,17 @@
     <?php require_once APP . '/views/layouts/scripts.php' ?>
 
     <script>
+        // Variables
+        let idTabla = "#tabla"; // con selector #
+        let rutaList = '<?php echo BASE_URL . "/perfiles/list/" ?>';
+        let rutaEdit = ruta = '<?php echo BASE_URL . "/perfiles/edit/:id" ?>';
+        let rutaDestroy = "<?php echo BASE_URL . '/perfiles/destroy/:id' ?>";
+
+
+
         // Configuración del datatables
-        $('#tabla').DataTable( {
-            ajax: '<?php echo BASE_URL . "/perfiles/list/" ?>',
+        $(idTabla).DataTable( {
+            ajax: rutaList,
             columns: [
                 { data: 'id', visible: false },
                 { data: 'nombre' },
@@ -86,16 +94,16 @@
 
         // Configuramos el editar y eliminar del datatables
         // los llamaremos mediante la clase 'opt-editar' y 'opt-eliminar'
-        $('#tabla tbody').on('click', 'a.btn-editar', function(event) {
+        $(idTabla + ' tbody').on('click', 'a.btn-editar', function(event) {
             event.preventDefault(); // para que no se ejecute el click en el enlace
 
             let filaObj = $(this).closest('tr'); // primer tr encima de a.btn-editar
-            let fila = $('#tabla').DataTable().row(filaObj).data(); // carga toda la fila del datatables del tr anterior
+            let fila = $(idTabla).DataTable().row(filaObj).data(); // carga toda la fila del datatables del tr anterior
 
             // llamamos a la ruta pasandole la fila del datatables
-            ruta = '/perfiles/edit/' + fila.id;
+            let ruta = rutaEdit.replace(':id', fila.id);
             
-            window.location.href = "<?php echo BASE_URL ?>" + ruta;
+            window.location.href = ruta;
 
             console.log(fila);
 
@@ -109,12 +117,12 @@
             
         });
 
-        $('#tabla tbody').on('click', 'a.btn-eliminar', function(event) {
+        $(idTabla + ' tbody').on('click', 'a.btn-eliminar', function(event) {
             event.preventDefault();
             let filaObj = $(this).closest('tr'); // primer tr encima de a.btn-editar
-            let fila = $('#tabla').DataTable().row(filaObj).data(); // carga toda la fila del datatables del tr anterior
+            let fila = $(idTabla).DataTable().row(filaObj).data(); // carga toda la fila del datatables del tr anterior
 
-            let ruta = '/perfiles/destroy/' + fila.id;
+            let ruta = rutaDestroy.replace(':id', fila.id);
 
             Swal.fire({
                 title: '¿Estás seguro?',
@@ -126,11 +134,11 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url:  "<?php echo BASE_URL ?>" + ruta,
+                        url:  ruta,
                         method: 'DELETE',
                         success: function (response) {
                             Swal.fire('¡Eliminado!', 'Se eliminó el registro.', 'success');
-                            $('#tabla').DataTable().ajax.reload(); //recarga el datatable
+                            $(idTabla).DataTable().ajax.reload(); //recarga el datatable
                         },
                         error: function (xhr, status, error) {
                             Swal.fire('Error', 'No se pudo eliminar el registro.', 'error');

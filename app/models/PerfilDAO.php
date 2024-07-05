@@ -34,7 +34,7 @@ class PerfilDAO
         return [
             "success" => false,
             "message" => "Perfil no encontrado"
-        ];    
+        ];
     }
 
     // Obtenemos todos los perfiles

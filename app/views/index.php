@@ -6,7 +6,7 @@
     <title><?php echo ( isset($titulo) ) ? $titulo : 'SISTEMA DE GESTIÓN' ?></title>
     <?php require_once APP . '/views/layouts/head.php' ?>
 </head>
-<body>
+<body class="bg-gray-100">
     <?php require_once APP . '/views/layouts/header.php' ?>
     <main class="flex-grow flex items-center justify-center p-4 w-full max-w-screen-xl mx-auto">
         <div class="bg-white p-6 rounded shadow-md w-full">
