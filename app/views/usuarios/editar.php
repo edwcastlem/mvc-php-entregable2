@@ -107,12 +107,6 @@
                             Regresar
                         </button>
                     </div>
-
-                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                        <a class="inline-block align-baseline font-bold text-sm text-gray-800 hover:text-blue-800" href="#">
-                            Resetear password
-                        </a>
-                    </div>
                 </div>
             </form>
             <!-- Fin formulario -->

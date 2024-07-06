@@ -16,7 +16,7 @@ CREATE TABLE usuarios (
     perfiles_id INT NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
-    email VARCHAR(20) UNIQUE,
+    email VARCHAR(60) UNIQUE,
     dni VARCHAR(8) UNIQUE,
     direccion VARCHAR(60),
     fecha_creacion DATETIME NOT NULL,
@@ -85,3 +85,8 @@ AS
     inner join perfiles p on u.perfiles_id = p.id
 
 select * from listar_usuarios;
+
+
+select * from usuarios u where u.email = 'benavides_alonso@gma' and u.password='asdf';
+
+select * from usuarios;

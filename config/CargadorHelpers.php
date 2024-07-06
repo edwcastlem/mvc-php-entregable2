@@ -1,6 +1,7 @@
 <?php
 
 class CargadorHelpers {
+
     public static function loadHelper($helper, $parametros = [])
     {
         if (file_exists('app/helpers/' . $helper . '.php')) {
@@ -14,4 +15,5 @@ class CargadorHelpers {
             die("404 NO ENCONTRADO");
         }
     }
+    
 }

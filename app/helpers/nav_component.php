@@ -8,12 +8,19 @@
 
 
     CargadorHelpers::loadHelper('utiles');
+    require_once 'app/helpers/LoginUtils.php';
+    require_once 'app/models/Usuario.php';
 ?>
     
 <nav class="border-gray-200 px-4 lg:px-6 py-2.5 bg-gray-800">
     <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
         <div class="flex items-center lg:order-2">
-            <a href="#" class="text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 hover:bg-gray-700 focus:outline-none focus:ring-gray-800">Iniciar sesión</a>
+            <?php if ( LoginUtils::estaLogueado() ) { ?>
+            <p class="text-white"><?php echo LoginUtils::usuarioLogin()->getNombre() ?></p>
+            <a class="text-white" href="<?php echo BASE_URL. '/login/cerrar_sesion' ?>">Cerrar sesión</a>
+            <?php } else { ?>
+            <a href="<?php echo BASE_URL. '/login' ?>" class="text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 hover:bg-gray-700 focus:outline-none focus:ring-gray-800">Iniciar sesión</a>
+            <?php } ?>
         </div>
         <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
             <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">

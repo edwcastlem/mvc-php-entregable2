@@ -45,6 +45,40 @@ class UsuarioDAO
         ];
     }
 
+    public function loginUsuario(string $email, string $password)
+    {
+        $sql = "SELECT * FROM usuarios WHERE email = '{$email}' AND password = '{$password}'";
+        $result = $this->conn->query($sql);
+
+        if ($result->num_rows == 1) {
+
+            $row = $result->fetch_assoc();
+
+            $usuario = new Usuario();
+            $usuario->setId($row['id']);
+            $usuario->setNombre($row['nombre']);
+            $usuario->setApellido($row['apellido']);
+            $usuario->setDni($row['dni']);
+            $usuario->setPassword($row['password']);
+            $usuario->setEmail($row['email']);
+            $usuario->setDireccion($row['direccion']);
+            $usuario->setFechaCreacion(new DateTime($row['fecha_creacion']));
+            $usuario->setFechaActualizacion(new DateTime($row['fecha_actualizacion']));
+            $usuario->setPerfilesId($row['perfiles_id']);
+
+            return [
+                "success" => true,
+                "data" => $usuario
+            ];
+        }
+        else {
+            return [
+                "success" => false,
+                "message" => "Usuario no encontrado"
+            ];
+        }
+    }
+
     public function getAll()
     {
         $sql = "SELECT * FROM listar_usuarios"; // llamamos a la vista
@@ -89,7 +123,7 @@ class UsuarioDAO
                 fecha_actualizacion = NOW(),
                 perfiles_id = {$usuario->getPerfilesId()}
                 WHERE id = {$usuario->getId()}";
-        
+
         $query = mysqli_query($this->conn, $sql);
 
         if ($query) {

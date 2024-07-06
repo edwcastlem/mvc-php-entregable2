@@ -1,16 +1,20 @@
 <?php
 
 require_once 'config/Controller.php';
+require_once 'app/helpers/LoginUtils.php';
 
 class PerfilesController extends Controller
 {
     public function index()
     {
+        LoginUtils::requiereLogin();
         $this->loadView('perfiles/index');
     }
 
     public function list()
     {
+        LoginUtils::requiereLogin();
+
         $perfilDAO = $this->loadModel('perfilDAO');
 
         $respuesta = $perfilDAO->getAll();
@@ -21,6 +25,7 @@ class PerfilesController extends Controller
 
     public function create()
     {
+        LoginUtils::requiereLogin();
         $this->loadView('perfiles/editar');
     }
 
@@ -30,13 +35,12 @@ class PerfilesController extends Controller
      */
     public function store()
     {
+        LoginUtils::requiereLogin();
+
         // Validamos...
         if ( !isset($_POST['nombre']) || empty($_POST['nombre']) )
         {
-            $respuesta = [
-                "success" => false,
-                "message" => "ERROR: Nombre obligatorio"
-            ];
+            http_response_code(200);
         }
         else
         {
@@ -66,6 +70,8 @@ class PerfilesController extends Controller
 
     public function edit(string $id)
     {
+        LoginUtils::requiereLogin();
+
         // Obtenemos el perfil con el id
         $perfilDAO = $this->loadModel('perfilDAO');
         $response = $perfilDAO->getPerfil($id);
@@ -87,6 +93,8 @@ class PerfilesController extends Controller
 
     public function update(string $id)
     {
+        LoginUtils::requiereLogin();
+
         // Validamos... vienen de un PUT
         $input = file_get_contents('php://input');
 
@@ -132,6 +140,8 @@ class PerfilesController extends Controller
 
     public function destroy(string $id)
     {
+        LoginUtils::requiereLogin();
+
         $perfilDAO = $this->loadModel('perfilDAO');
 
         $respuesta = $perfilDAO->delete($id);
