@@ -4,25 +4,25 @@ require_once 'config/Controller.php';
 require_once 'app/helpers/LoginUtils.php';
 require_once 'app/helpers/ValidarUtils.php';
 
-class PerfilesController extends Controller
+class CategoriasController extends Controller
 {
     private $camposObligatorios = ['nombre'];
 
     public function index()
     {
         LoginUtils::requiereLogin();
-        $this->loadView('perfiles/index');
+        $this->loadView('categorias/index');
     }
 
     public function list()
     {
         LoginUtils::requiereLogin();
 
-        $perfilDAO = $this->loadModel('PerfilDAO');
+        $categoriaDAO = $this->loadModel('categoriaDAO');
 
         $respuesta = [
             "success" => true,
-            "data" => $perfilDAO->getAll()
+            "data" => $categoriaDAO->getAll()
         ];
 
         header('Content-Type: application/json');
@@ -32,7 +32,7 @@ class PerfilesController extends Controller
     public function create()
     {
         LoginUtils::requiereLogin();
-        $this->loadView('perfiles/editar');
+        $this->loadView('categorias/editar');
     }
 
     /**
@@ -57,23 +57,23 @@ class PerfilesController extends Controller
         else
         {
             // Obtenemos los datos
-            $perfil = $this->loadModel('Perfil');
-            $perfilDAO = $this->loadModel('PerfilDAO');
+            $categoria = $this->loadModel('Categoria');
+            $categoriaDAO = $this->loadModel('CategoriaDAO');
             
-            $perfil->setNombre($_POST['nombre']);
+            $categoria->setNombre($_POST['nombre']);
     
-            $result = $perfilDAO->create($perfil);
+            $result = $categoriaDAO->create($categoria);
         }
 
         if ($result) {
             $respuesta = [
                 "success" => true,
-                "message" => "Perfil creado correctamente!"
+                "message" => "Categoría creada correctamente!"
             ];
         } else {
             $respuesta = [
                 "success" => false,
-                "message" => "No se pudo crear el perfil! " . $result 
+                "message" => "No se pudo crear la categoría! " . $result 
             ];
         }
 
@@ -86,19 +86,19 @@ class PerfilesController extends Controller
         LoginUtils::requiereLogin();
 
         // Obtenemos el perfil con el id
-        $perfilDAO = $this->loadModel('PerfilDAO');
-        $perfil = $perfilDAO->getPerfil($id);
+        $categoriaDAO = $this->loadModel('categoriaDAO');
+        $categoria = $categoriaDAO->getCategoria($id);
 
         // Validamos la respuesta del modelo
-        if ($perfil !== null) { // si se crea el perfil sin problemas
+        if ($categoria !== null) { // si se crea el perfil sin problemas
             // Enviamos la respuesta a la vista
-            $this->loadView('perfiles/editar', compact('perfil'));
+            $this->loadView('categorias/editar', compact('categoria'));
         }
         else {
-            $error = "Perfil no encontrado!!!";
+            $error = "Categoria no encontrada!!!";
 
             // Enviamos la respuesta a la vista
-            $this->loadView('perfiles/editar', compact('error'));
+            $this->loadView('categorias/editar', compact('error'));
         }
     }
 
@@ -125,13 +125,13 @@ class PerfilesController extends Controller
         else
         {
             // Obtenemos los datos
-            $perfil = $this->loadModel('Perfil');
-            $perfilDAO = $this->loadModel('PerfilDAO');
+            $categoria = $this->loadModel('Categoria');
+            $categoriaDAO = $this->loadModel('CategoriaDAO');
             
-            $perfil->setId($request['id']);
-            $perfil->setNombre($request['nombre']);
+            $categoria->setId($request['id']);
+            $categoria->setNombre($request['nombre']);
     
-            $result = $perfilDAO->update($perfil);
+            $result = $categoriaDAO->update($categoria);
         }
     
         // Verificamos si la respuesta tiene un error para mandar un codigo adecuado
@@ -159,16 +159,16 @@ class PerfilesController extends Controller
     {
         LoginUtils::requiereLogin();
 
-        $perfilDAO = $this->loadModel('PerfilDAO');
+        $categoriaDAO = $this->loadModel('CategoriaDAO');
 
-        $result = $perfilDAO->delete($id);
+        $result = $categoriaDAO->delete($id);
 
         // Verificamos si la respuesta tiene un error para mandar un codigo adecuado
         if ( $result )
         {
             $respuesta = [
                 "success" => true,
-                "message" => "Perfil eliminado con éxito!!!"
+                "message" => "Categoria eliminado con éxito!!!"
             ];
         }
         else

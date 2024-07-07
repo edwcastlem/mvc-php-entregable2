@@ -61,6 +61,9 @@
                             id="direccion" name="direccion" type="text" placeholder="Av. Perez 689" value="<?php echo isset($usuario) ? $usuario->getDireccion() : '' ?>">
                     </div>
                 </div>
+
+                <!-- Verificamos que no se haya mandado un objeto usuario a la vista -->
+                <?php if ( !isset($usuario) ) {?>
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="password">
@@ -77,6 +80,8 @@
                             id="confirmacion_password" name="confirmacion_password" type="password" placeholder="**************">
                     </div>
                 </div>
+                <?php } ?>
+
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="perfiles_id">

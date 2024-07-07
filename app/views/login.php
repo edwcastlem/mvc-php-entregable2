@@ -34,7 +34,8 @@
                         <button id="btnLogin" class="bg-gray-800 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                             Iniciar sesión
                         </button>
-                        <a class="inline-block align-baseline font-bold text-sm text-gray-800 hover:text-blue-800" href="#">
+                        <a class="inline-block align-baseline font-bold text-sm text-gray-800 hover:text-blue-800" 
+                            href="<?php echo BASE_URL . '/login/restablecer' ?>">
                             Restablecer contraseña
                         </a>
                     </div>
@@ -46,17 +47,9 @@
     <?php require_once APP . '/views/layouts/scripts.php' ?>
 
     <script>
-        // Algoritmo
-        // obtenemos el usuario y contraseña del formulario
-        // enviamos el fomrulario por ajax
-        // validamos los datos en el controlador usando el modelo usuarios para consultar a la bd 
-        //   y redireccionamos en caso sea necesario
-        // adecuamos las respuestas en formato json
-
         $('#login_form').on('submit', function(event) {
             event.preventDefault();
 
-            // let formulario = $(this)[0];
             console.log($(this).serialize());
 
             $.ajax({
@@ -64,14 +57,16 @@
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(data) {
-                    window.location.href = "<?php echo BASE_URL . '/pagina/hola' ?>";
-                },
-                error: function(xhr, status, error) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: xhr.responseJSON.message,
-                        icon: 'error',
-                    });
+                    if (data.success) {
+                        window.location.href = "<?php echo BASE_URL . '/pagina/index' ?>";
+                    }
+                    else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: data.message,
+                            icon: 'error',
+                        });
+                    }
                 }
             });
         });

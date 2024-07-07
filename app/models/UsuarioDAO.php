@@ -2,6 +2,7 @@
 
 require_once RAIZ . '/database/Conexion.php';
 require_once 'Usuario.php';
+require_once 'PerfilDAO.php';
 
 class UsuarioDAO
 {
@@ -13,7 +14,7 @@ class UsuarioDAO
         $this->conn = $conexion->getConexion();
     }
 
-    public function getUsuario(int $id)
+    public function getUsuario(int $id): ?Usuario
     {
         $sql = "SELECT * FROM usuarios WHERE id = {$id}";
         $result = $this->conn->query($sql);
@@ -32,26 +33,23 @@ class UsuarioDAO
             $usuario->setFechaCreacion(new DateTime($row['fecha_creacion']));
             $usuario->setFechaActualizacion(new DateTime($row['fecha_actualizacion']));
             $usuario->setPerfilesId($row['perfiles_id']);
+            
+            // Recuperamos el id del perfil
+            $perfilDAO = new PerfilDAO();
+            $usuario->setPerfil($perfilDAO->getPerfil($row['perfiles_id']));
 
-            return [
-                "success" => true,
-                "data" => $usuario
-            ];
+            return $usuario;
         }
 
-        return [
-            "success" => false,
-            "message" => "Usuario no encontrado"
-        ];
+        return null;
     }
 
-    public function loginUsuario(string $email, string $password)
+    public function getUsuarioByEmail(string $email): ?Usuario // puede devolver un obj usuario o null
     {
-        $sql = "SELECT * FROM usuarios WHERE email = '{$email}' AND password = '{$password}'";
+        $sql = "SELECT * FROM usuarios WHERE email = '{$email}'";
         $result = $this->conn->query($sql);
 
-        if ($result->num_rows == 1) {
-
+        if ($result->num_rows == 1) { // encuentra el usuario
             $row = $result->fetch_assoc();
 
             $usuario = new Usuario();
@@ -65,17 +63,33 @@ class UsuarioDAO
             $usuario->setFechaCreacion(new DateTime($row['fecha_creacion']));
             $usuario->setFechaActualizacion(new DateTime($row['fecha_actualizacion']));
             $usuario->setPerfilesId($row['perfiles_id']);
+            
+            // Recuperamos el id del perfil
+            $perfilDAO = new PerfilDAO();
+            $usuario->setPerfil($perfilDAO->getPerfil($row['perfiles_id']));
 
-            return [
-                "success" => true,
-                "data" => $usuario
-            ];
+            return $usuario;
         }
-        else {
-            return [
-                "success" => false,
-                "message" => "Usuario no encontrado"
-            ];
+
+        return null;
+    }
+
+    public function loginUsuario(string $email, string $password): ?Usuario
+    {
+        $usuario = $this->getUsuarioByEmail($email);
+
+        // Si el usuario existe
+        if ($usuario !== null) {
+            // Verificamos el password encriptado
+            if ( password_verify($password, $usuario->getPassword()) ) {
+                return $usuario;
+            }
+            else {
+                return null;
+            }
+        }
+        else { // No existe el email del usuario
+            return null;
         }
     }
 
@@ -85,10 +99,7 @@ class UsuarioDAO
         $result = $this->conn->query($sql);
         $usuarios = $result->fetch_all(MYSQLI_ASSOC);
 
-        return [
-            "success" => true,
-            "data" => $usuarios
-        ];
+        return $usuarios;
     }
 
     public function create(Usuario $usuario)
@@ -98,17 +109,7 @@ class UsuarioDAO
                         '{$usuario->getDireccion()}', NOW(), NOW(), {$usuario->getPerfilesId()})";
         $query = mysqli_query($this->conn, $sql);
 
-        if ($query) {
-            return [
-                "success" => true,
-                "message" => "Usuario creado exitosamente"
-            ];
-        } else {
-            return [
-                "success" => false,
-                "message" => "Error al crear usuario: " . mysqli_error($this->conn)
-            ];
-        }
+        return $query === false ? mysqli_error($this->conn) : true;
     }
 
     public function update(Usuario $usuario)
@@ -126,17 +127,7 @@ class UsuarioDAO
 
         $query = mysqli_query($this->conn, $sql);
 
-        if ($query) {
-            return [
-                "success" => true,
-                "message" => "Usuario actualizado exitosamente"
-            ];
-        } else {
-            return [
-                "success" => false,
-                "message" => "Error al actualizar usuario: " . mysqli_error($this->conn)
-            ];
-        }
+        return $query === false ? mysqli_error($this->conn) : true;
     }
 
     public function delete(int $id)
@@ -144,16 +135,6 @@ class UsuarioDAO
         $sql = "DELETE FROM usuarios WHERE id = {$id}";
         $query = mysqli_query($this->conn, $sql);
 
-        if ($query) {
-            return [
-                "success" => true,
-                "message" => "Usuario eliminado exitosamente"
-            ];
-        } else {
-            return [
-                "success" => false,
-                "message" => "Error al eliminar usuario: " . mysqli_error($this->conn)
-            ];
-        }
+        return $query === false ? mysqli_error($this->conn) : true;
     }
 }

@@ -71,6 +71,11 @@
             { data: 'direccion' },
             { data: 'fecha_creacion' },
             { data: 'fecha_actualizacion' }
+        ], [
+            {
+                targets: [7,8],  // Coluumnas Fecha de creacion y actualizacion 
+                render: DataTable.render.datetime('DD/MM/YYYY HH:mm')
+            },
         ]);
 
         // Configuramos la accion de editar dentro de datatables

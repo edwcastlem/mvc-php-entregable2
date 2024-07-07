@@ -9,15 +9,4 @@ class PaginaController extends Controller
     {
         $this->loadView('index');
     }
-
-    public function prueba()
-    {
-        $this->loadView('prueba_forms');
-    }
-
-    public function hola()
-    {
-        LoginUtils::requiereLogin();
-        $this->loadView('hola');
-    }
 }

@@ -13,7 +13,7 @@ class PerfilDAO
         $this->conn = $conexion->getConexion();
     }
 
-    public function getPerfil(string $id)
+    public function getPerfil(string $id): ?Perfil
     {
         $sql = "SELECT * FROM perfiles WHERE id = " . $id;
         $result = $this->conn->query($sql);
@@ -25,16 +25,10 @@ class PerfilDAO
             $perfil->setId($row['id']);
             $perfil->setNombre($row['nombre']);
 
-            return [
-                "success" => true,
-                "data" => $perfil
-            ];
+            return $perfil;
         }
 
-        return [
-            "success" => false,
-            "message" => "Perfil no encontrado"
-        ];
+        return null;
     }
 
     // Obtenemos todos los perfiles
@@ -44,10 +38,7 @@ class PerfilDAO
         $result = $this->conn->query($sql);
         $perfiles = $result->fetch_all(MYSQLI_ASSOC); // asocia los nombres de los campos con su valor
 
-        return [
-            "success" => true,
-            "data" => $perfiles
-        ];
+        return $perfiles;
     }
 
     // Crear un perfil 
@@ -56,18 +47,7 @@ class PerfilDAO
         $sql = "INSERT INTO perfiles (nombre) VALUES ('{$perfil->getNombre()}')";
         $query = mysqli_query($this->conn,  $sql);
 
-        if ($query) {
-            return [
-                "success" => true,
-                "message" => "Perfil creado exitosamente"
-            ];
-        } 
-        else {
-            return [
-                "success" => false,
-                "message" => "ERROR: Perfil no se creo"
-            ];
-        }
+        return $query === false ? mysqli_error($this->conn) : true;
     }
 
     public function update(Perfil $perfil)
@@ -75,18 +55,7 @@ class PerfilDAO
         $sql = "UPDATE perfiles set nombre = '{$perfil->getNombre()}' where id = {$perfil->getId()}";
         $query = mysqli_query($this->conn, $sql);
 
-        if ($query) {
-            return [
-                "success" => true,
-                "message" => "Perfil actualizado exitosamente"
-            ];
-        } 
-        else {
-            return [
-                "success" => false,
-                "message" => "ERROR: Perfil no se pudo actualizar {mysqli_error($this->conn)}"
-            ];
-        }
+        return $query === false ? mysqli_error($this->conn) : true;
     }
 
     public function delete(string $id)
@@ -94,17 +63,6 @@ class PerfilDAO
         $sql = "DELETE FROM perfiles WHERE id = {$id}";
         $query = mysqli_query($this->conn, $sql);
 
-        if ($query) {
-            return [
-                "success" => true,
-                "message" => "Se eliminó exitosamente"
-            ];
-        } 
-        else {
-            return [
-                "success" => false,
-                "message" => "ERROR: No se pudo eliminar"
-            ];
-        }
+        return $query === false ? mysqli_error($this->conn) : true;
     }
 }

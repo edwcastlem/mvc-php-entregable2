@@ -1,4 +1,4 @@
-function configDatatables(idTabla, rutaList, columns)
+function configDatatables(idTabla, rutaList, columns, opcionesColumnas = [])
 {
     // Configuración del datatables
     $(idTabla).DataTable( {
@@ -23,6 +23,7 @@ function configDatatables(idTabla, rutaList, columns)
                 `
             }
         ),
+        columnDefs: opcionesColumnas,
         language: {
             emptyTable: "No hay datos en la tabla!",
             info: "Mostrando _START_ to _END_ de _TOTAL_ registros",
@@ -97,14 +98,16 @@ function configEliminar(idTabla, rutaDestroy, selectorAplicado = 'a.btn-eliminar
                     url:  ruta,
                     method: 'DELETE',
                     success: function (response) {
-                        Swal.fire('¡Eliminado!', 'Se eliminó el registro.', 'success');
-                        $(idTabla).DataTable().ajax.reload(); //recarga el datatable
-                    },
-                    error: function (xhr, status, error) {
-                        Swal.fire('Error', 'No se pudo eliminar el registro.', 'error');
+                        if (response.success) {
+                            Swal.fire('¡Eliminado!', response.message, 'success');
+                            $(idTabla).DataTable().ajax.reload(); //recarga el datatable
+                        } 
+                        else {
+                            Swal.fire('Error', response.message, 'error');
+                        }
                     }
                 });
-                console.log("ID enviado: " + data.id);
+                console.log("ID enviado: " + fila.id);
             }
         });
     });
@@ -124,18 +127,20 @@ function cargarSelect(idSelect, ruta, idSeleccionado = "") {
         url: ruta,
         method: 'GET',
         success: function (response) {
-            select.innerHTML = '<option value="">Seleccionar</option>';
-            
-            for (const item of response.data) { // of para iterar un array
-                select.innerHTML += `<option value="${item.id}">${item.nombre}</option>`;
-                console.log(`Clave: ${item.id}  valor: ${item.nombre}`);
+            if (response.success) {
+                select.innerHTML = '<option value="">Seleccionar</option>';
+                
+                for (const item of response.data) { // of para iterar un array
+                    select.innerHTML += `<option value="${item.id}">${item.nombre}</option>`;
+                    console.log(`Clave: ${item.id}  valor: ${item.nombre}`);
+                }
+    
+                select.value = idSeleccionado;
+                console.log(idSeleccionado);
             }
-
-            select.value = idSeleccionado;
-            console.log(idSeleccionado);
-        },
-        error: function (xhr, status, error) {
-            console.log(error);
+            else {
+                console.log(response);
+            }
         }
     });
 }
@@ -183,16 +188,15 @@ function configFormulario(idFormulario, rutaStore, rutaUpdate, accionesOkCallbac
                                 accionesOkCallback();
                             }
                         });
-                    //formulario[0].reset();
                 }
-            },
-            error: function(response) {
-                console.log(response);
-                Swal.fire({
-                    title: 'Error',
-                    text: response.responseJSON.message,
-                    icon: 'error',
-                });
+                else {
+                    console.log(response);
+                    Swal.fire({
+                        title: 'Error',
+                        text: response.message,
+                        icon: 'error',
+                    });
+                }
             }
         });
     });

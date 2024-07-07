@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Perfil.php';
+
 class Usuario {
     private int $id;
     private string $nombre;
@@ -11,6 +13,7 @@ class Usuario {
     private \DateTime $fechaCreacion;
     private \DateTime $fechaActualizacion;
     private int $perfiles_id;
+    private Perfil $perfil;
 
     public function getId(): int {
         return $this->id;
@@ -90,5 +93,13 @@ class Usuario {
 
     public function setPerfilesId(int $perfiles_id): void {
         $this->perfiles_id = $perfiles_id;
+    }
+
+    public function getPerfil(): Perfil {
+        return $this->perfil;
+    }
+
+    public function setPerfil(Perfil $perfil) {
+        $this->perfil = $perfil;
     }
 }
