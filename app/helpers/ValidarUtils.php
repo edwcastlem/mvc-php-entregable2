@@ -18,6 +18,17 @@ class ValidarUtils
         return $errores;
     }
 
+    public static function validarPrecioCompraventa(float $precioCompra, float $precioVenta): Array
+    {
+        $errores = [];
+
+        if ($precioCompra >= $precioVenta) {
+            $errores[] = "El precio de venta tiene que ser mayor que el precio de compra";
+        }
+
+        return $errores;
+    }
+
     // Reconocer errores de bd
     public static function msjErrorBD(mysqli_sql_exception $e)
     {

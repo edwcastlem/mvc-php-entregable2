@@ -64,6 +64,7 @@
         let rutaList = '<?php echo BASE_URL . "/productos/list/" ?>';
         let rutaEdit = ruta = '<?php echo BASE_URL . "/productos/edit/:id" ?>';
         let rutaDestroy = "<?php echo BASE_URL . '/productos/destroy/:id' ?>";
+        let rutaShow = "<?php echo BASE_URL . '/productos/show/:id' ?>";
 
 
         // Configuramos el datatables, el parametro Columns contiene las columnas del datatable
@@ -98,14 +99,7 @@
         configEliminar(idTabla, rutaDestroy);
 
         // Boton ver
-        $(idTabla + ' tbody').on('click', 'a.btn-ver', function(event) {
-            event.preventDefault();
-
-            let filaObj = $(this).closest('tr'); // primer tr encima de a.btn-editar
-            let fila = $(idTabla).DataTable().row(filaObj).data(); // carga toda la fila del datatables del tr anterior
-
-            window.location.href = "<?php echo BASE_URL . '/productos/show/' ?>" + fila.id;
-        });
+        configShow(idTabla, rutaShow);
     </script>
 
 </body>

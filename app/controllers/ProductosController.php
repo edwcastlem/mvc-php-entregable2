@@ -49,6 +49,7 @@ class ProductosController extends Controller {
         LoginUtils::requiereLogin();
 
         $errores = ValidarUtils::camposObligatorios($this->camposObligatorios, $_POST);
+        $errores = array_merge($errores, ValidarUtils::validarPrecioCompraventa($_POST['precio_compra'], $_POST['precio_venta']));
 
         if (!empty($errores)) {
             $respuesta = [
@@ -140,6 +141,9 @@ class ProductosController extends Controller {
         parse_str($input, $request);
 
         $errores = ValidarUtils::camposObligatorios($this->camposObligatorios, $request);
+        $pCompra = floatval($request['precio_compra']);
+        $pVenta = floatval($request['precio_venta']);
+        $errores = array_merge($errores, ValidarUtils::validarPrecioCompraventa($pCompra, $pVenta));
 
         if (!empty($errores)) {
             $respuesta = [
