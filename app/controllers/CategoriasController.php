@@ -119,7 +119,8 @@ class CategoriasController extends Controller
         {
             $respuesta = [
                 "success" => false,
-                "message" => "ERROR: No se puedo actualizar. {$errores}"
+                "message" => "ERROR: No se puedo actualizar.",
+                "errors" => $errores
             ];
         }
         else
@@ -132,22 +133,22 @@ class CategoriasController extends Controller
             $categoria->setNombre($request['nombre']);
     
             $result = $categoriaDAO->update($categoria);
-        }
-    
-        // Verificamos si la respuesta tiene un error para mandar un codigo adecuado
-        if ($result)
-        {
-            $respuesta = [
-                "success" => true,
-                "message" => "Se actualizó con éxito"
-            ];
-        }
-        else
-        {
-            $respuesta = [
-                "success" => false,
-                "message" => "ERROR: No se pudo actualizar con éxito!!"
-            ];
+
+            // Verificamos si la respuesta tiene un error para mandar un codigo adecuado
+            if ($result)
+            {
+                $respuesta = [
+                    "success" => true,
+                    "message" => "Se actualizó con éxito"
+                ];
+            }
+            else
+            {
+                $respuesta = [
+                    "success" => false,
+                    "message" => "ERROR: No se pudo actualizar con éxito!!" . $result
+                ];
+            }
         }
 
         // Enviamos la respuesta
@@ -164,7 +165,7 @@ class CategoriasController extends Controller
         $result = $categoriaDAO->delete($id);
 
         // Verificamos si la respuesta tiene un error para mandar un codigo adecuado
-        if ( $result )
+        if ( $result === true )
         {
             $respuesta = [
                 "success" => true,

@@ -18,9 +18,9 @@ class CategoriaDAO
         $sql = "SELECT * FROM categorias WHERE id = " . $id;
         $result = $this->conn->query($sql);
 
-        $row = $result->fetch_assoc();
+        if ($result->num_rows == 1) {
 
-        if ($row) {
+            $row = $result->fetch_assoc();
             $categoria = new Categoria();
             $categoria->setId($row['id']);
             $categoria->setNombre($row['nombre']);
@@ -44,25 +44,40 @@ class CategoriaDAO
     // Crear una categoria 
     public function create(Categoria $categoria)
     {
-        $sql = "INSERT INTO categorias (nombre) VALUES ('{$categoria->getNombre()}')";
-        $query = mysqli_query($this->conn,  $sql);
-
-        return $query === false ? mysqli_error($this->conn) : true;
+        try {
+            $sql = "INSERT INTO categorias (nombre) VALUES ('{$categoria->getNombre()}')";
+            $result = mysqli_query($this->conn,  $sql);
+    
+            return $result;
+        }
+        catch (mysqli_sql_exception $e) {
+            return ValidarUtils::msjErrorBD($e);
+        }
     }
 
     public function update(Categoria $categoria)
     {
-        $sql = "UPDATE categorias set nombre = '{$categoria->getNombre()}' where id = {$categoria->getId()}";
-        $query = mysqli_query($this->conn, $sql);
-
-        return $query === false ? mysqli_error($this->conn) : true;
+        try {
+            $sql = "UPDATE categorias set nombre = '{$categoria->getNombre()}' where id = {$categoria->getId()}";
+            $result = mysqli_query($this->conn, $sql);
+    
+            return $result;
+        }
+        catch (mysqli_sql_exception $e) {
+            return ValidarUtils::msjErrorBD($e);
+        }
     }
 
     public function delete(string $id)
     {
-        $sql = "DELETE FROM categorias WHERE id = {$id}";
-        $query = mysqli_query($this->conn, $sql);
-
-        return $query === false ? mysqli_error($this->conn) : true;
+        try {
+            $sql = "DELETE FROM categorias WHERE id = {$id}";
+            $result = mysqli_query($this->conn, $sql);
+    
+            return $result;
+        }
+        catch (mysqli_sql_exception $e) {
+            return ValidarUtils::msjErrorBD($e);
+        }
     }
 }

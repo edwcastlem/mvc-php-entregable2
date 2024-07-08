@@ -17,26 +17,11 @@
     <?php require_once APP . '/views/layouts/header.php' ?>
     <main class="flex-grow flex items-center justify-center p-4 w-full max-w-screen-xl mx-auto">
         <div class="bg-white p-6 rounded shadow-md w-full">
-            <h2 class="text-xl mb-4">
-                <?php
-                    if ($usuario) {
-                        echo "Bienvenido " . $usuario->getNombre() . " " . $usuario->getApellido();
-                    } else {
-                        echo "Página principal";
-                    }
-                ?>
+            <h2 class="text-xl mb-4 text-red-800">
+                Error
             </h2>
             <p class="my-4">
-            <?php
-                if ($usuario) {
-                    echo "Tu email es: " . $usuario->getEmail() . "<br>Tienes el rol de: " . $usuario->getPerfil()->getNombre();
-                } else {
-                    echo "Página principal";
-                }
-            ?>
-            </p>
-            <p class="my-4">
-                
+                <?php echo $error ?>
             </p>
         </div>
     </main>

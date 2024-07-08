@@ -28,6 +28,7 @@ class LoginController extends Controller
             $usuario = $usuarioDAO->loginUsuario($email, $password);
     
             if ($usuario !== null) {
+                // Agregamos al usuario en la sesion actual
                 session_start();
                 $_SESSION['usuario'] = $usuario;
     
@@ -137,11 +138,10 @@ class LoginController extends Controller
                 // Traemos el email para buscar al usuario
                 $email = $_POST['email'];
                 $usuarioDAO = $this->loadModel('UsuarioDAO');
-                $usuario = $usuarioDAO->getUsuarioByEmail($email);
                 
                 // Cambiamos la contraseña
-                $usuario->setPassword(password_hash($password, PASSWORD_DEFAULT));
-                $usuarioDAO->update($usuario);
+                $password = password_hash($password, PASSWORD_DEFAULT);
+                $usuarioDAO->updatePassword($email, $password);
 
                 // Todo ok
                 $respuesta = [
@@ -159,7 +159,7 @@ class LoginController extends Controller
         else {
             $respuesta = [
                 "success" => true,
-                "message" => "Las contrseñas son obligatorias!!!"
+                "message" => "Las contraseñas son obligatorias!!!"
             ];
         }
 

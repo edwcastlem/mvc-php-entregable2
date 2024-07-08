@@ -84,9 +84,29 @@ AS
     from usuarios u
     inner join perfiles p on u.perfiles_id = p.id
 
-select * from listar_usuarios;
+CREATE OR REPLACE VIEW listar_productos
+AS
+    select 
+        p.id as id, p.categorias_id, c.nombre as categorias_nombre, p.codigo, p.nombre, p.descripcion, p.proveedores_id, pr.razon_social,
+        p.moneda, p.precio_compra, p.precio_venta, p.usuarios_id, u.email as usuarios_email, p.fecha_creacion, p.fecha_actualizacion
+    from productos p 
+    inner join categorias c on p.categorias_id = c.id
+    inner join proveedores pr on p.proveedores_id = pr.id
+    inner join usuarios u on p.usuarios_id = u.id;
 
 
-select * from usuarios u where u.email = 'benavides_alonso@gma' and u.password='asdf';
-
-select * from usuarios;
+                { data: 'id', visible: false },
+            { data: 'categorias_id', visible: false },
+            { data: 'categorias_nombre' },
+            { data: 'codigo' },
+            { data: 'nombre' },
+            { data: 'descripcion' },
+            { data: 'proveedores_id', visible: false },
+            { data: 'proveedores_nombre' },
+            { data: 'moneda' },
+            { data: 'precio_compra' },
+            { data: 'precio_venta' },
+            { data: 'usuarios_id', visible: false },
+            { data: 'usuarios_email' },
+            { data: 'fecha_creacion' },
+            { data: 'fecha_actualizacion' }

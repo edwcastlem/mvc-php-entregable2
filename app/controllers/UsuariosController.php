@@ -74,7 +74,7 @@ class UsuariosController extends Controller
     
                 $result = $usuarioDAO->create($usuario);
 
-                if ($result) {
+                if ($result === true) {
                     $respuesta = [
                         "success" => true,
                         "message" => "Usuario creado correctamente!"
@@ -104,6 +104,21 @@ class UsuariosController extends Controller
             $error = "No se encontro el usuario!!!";
 
             $this->loadView('usuarios/editar', compact('error'));
+        }
+    }
+
+    public function show(string $id)
+    {
+        LoginUtils::requiereLogin();
+        $usuarioDAO = $this->loadModel('UsuarioDAO');
+        $usuario = $usuarioDAO->getUsuario($id);
+
+        if (!empty($usuario)) {
+            $this->loadView('usuarios/show', compact('usuario'));
+        } else {
+            $error = "No se encontro el usuario!!!";
+
+            $this->loadView('error', compact('error'));
         }
     }
 
@@ -140,19 +155,27 @@ class UsuariosController extends Controller
             $usuario->setFechaActualizacion(new DateTime()); // actualizamos la fecha de actualizacion
             $usuario->setPerfilesId($request['perfiles_id']);
 
+            // Recuperamos el id del perfil
+            $perfilDAO = new PerfilDAO();
+            $usuario->setPerfil($perfilDAO->getPerfil($usuario->getPerfilesId()));
+            
             $result = $usuarioDAO->update($usuario);
-        }
 
-        if ($result) {
-            $respuesta = [
-                "success" => true,
-                "message" => "Se actualizó correctamente al usuario"
-            ];
-        } else {
-            $respuesta = [
-                "success" => true,
-                "message" => "ERROR: No se pudo actualizar. {$result}"
-            ];
+            // Generamos la respuesta
+            if ($result === true) {
+                // actualizamos el usuario de la sesión
+                $_SESSION['usuario'] = $usuario;
+                
+                $respuesta = [
+                    "success" => true,
+                    "message" => "Se actualizó correctamente al usuario"
+                ];
+            } else {
+                $respuesta = [
+                    "success" => true,
+                    "message" => "ERROR: No se pudo actualizar. {$result}"
+                ];
+            }
         }
 
         header('Content-Type: application/json');
@@ -168,7 +191,7 @@ class UsuariosController extends Controller
 
         $result = $usuarioDAO->delete($id);
 
-        if ($result) {
+        if ($result === true) {
             $respuesta = [
                 "success" => true,
                 "message" => "Usuario eliminado con éxito!!!"

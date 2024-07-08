@@ -19,9 +19,10 @@ class UsuarioDAO
         $sql = "SELECT * FROM usuarios WHERE id = {$id}";
         $result = $this->conn->query($sql);
 
-        $row = $result->fetch_assoc();
+        if ($result->num_rows == 1) { // encuentra el usuario
 
-        if ($row) {
+            $row = $result->fetch_assoc();
+
             $usuario = new Usuario();
             $usuario->setId($row['id']);
             $usuario->setNombre($row['nombre']);
@@ -93,6 +94,22 @@ class UsuarioDAO
         }
     }
 
+    public function updatePassword(string $email, string $password)
+    {
+        try {
+            $sql = "UPDATE usuarios SET 
+                    password = {$password}
+                    WHERE email = '{$email}'";
+    
+            $result = mysqli_query($this->conn, $sql);
+    
+            return $result;
+        }
+        catch (mysqli_sql_exception $e) {
+            return ValidarUtils::msjErrorBD($e);
+        }
+    }
+
     public function getAll()
     {
         $sql = "SELECT * FROM listar_usuarios"; // llamamos a la vista
@@ -104,37 +121,51 @@ class UsuarioDAO
 
     public function create(Usuario $usuario)
     {
-        $sql = "INSERT INTO usuarios (nombre, apellido, dni, password, email, direccion, fecha_creacion, fecha_actualizacion, perfiles_id) 
-                VALUES ('{$usuario->getNombre()}', '{$usuario->getApellido()}', '{$usuario->getDni()}', '{$usuario->getPassword()}' ,'{$usuario->getEmail()}',
-                        '{$usuario->getDireccion()}', NOW(), NOW(), {$usuario->getPerfilesId()})";
-        $query = mysqli_query($this->conn, $sql);
-
-        return $query === false ? mysqli_error($this->conn) : true;
+        try {
+            $sql = "INSERT INTO usuarios (nombre, apellido, dni, password, email, direccion, fecha_creacion, fecha_actualizacion, perfiles_id) 
+                    VALUES ('{$usuario->getNombre()}', '{$usuario->getApellido()}', '{$usuario->getDni()}', '{$usuario->getPassword()}' ,'{$usuario->getEmail()}',
+                            '{$usuario->getDireccion()}', NOW(), NOW(), {$usuario->getPerfilesId()})";
+            $result = mysqli_query($this->conn, $sql);
+    
+            return $result === false ? mysqli_error($this->conn) : true;
+        }
+        catch (mysqli_sql_exception $e) {
+            return ValidarUtils::msjErrorBD($e);
+        }
     }
 
     public function update(Usuario $usuario)
     {
-        $sql = "UPDATE usuarios SET 
-                nombre = '{$usuario->getNombre()}',
-                apellido = '{$usuario->getApellido()}',
-                dni = '{$usuario->getDni()}',
-                password = '{$usuario->getPassword()}',
-                email = '{$usuario->getEmail()}',
-                direccion = '{$usuario->getDireccion()}',
-                fecha_actualizacion = NOW(),
-                perfiles_id = {$usuario->getPerfilesId()}
-                WHERE id = {$usuario->getId()}";
-
-        $query = mysqli_query($this->conn, $sql);
-
-        return $query === false ? mysqli_error($this->conn) : true;
+        try {
+            $sql = "UPDATE usuarios SET 
+                    nombre = '{$usuario->getNombre()}',
+                    apellido = '{$usuario->getApellido()}',
+                    dni = '{$usuario->getDni()}',
+                    email = '{$usuario->getEmail()}',
+                    direccion = '{$usuario->getDireccion()}',
+                    fecha_actualizacion = NOW(),
+                    perfiles_id = {$usuario->getPerfilesId()}
+                    WHERE id = {$usuario->getId()}";
+    
+            $result = mysqli_query($this->conn, $sql);
+    
+            return $result;
+        }
+        catch (mysqli_sql_exception $e) {
+            return ValidarUtils::msjErrorBD($e);
+        }
     }
 
     public function delete(int $id)
     {
-        $sql = "DELETE FROM usuarios WHERE id = {$id}";
-        $query = mysqli_query($this->conn, $sql);
-
-        return $query === false ? mysqli_error($this->conn) : true;
+        try {
+            $sql = "DELETE FROM usuarios WHERE id = {$id}";
+            $result = mysqli_query($this->conn, $sql);
+    
+            return $result;
+        }
+        catch (mysqli_sql_exception $e) {
+            return ValidarUtils::msjErrorBD($e);
+        }
     }
 }

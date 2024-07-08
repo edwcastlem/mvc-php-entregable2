@@ -18,9 +18,9 @@ class PerfilDAO
         $sql = "SELECT * FROM perfiles WHERE id = " . $id;
         $result = $this->conn->query($sql);
 
-        $row = $result->fetch_assoc();
-
-        if ($row) {
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+    
             $perfil = new Perfil();
             $perfil->setId($row['id']);
             $perfil->setNombre($row['nombre']);
@@ -44,25 +44,40 @@ class PerfilDAO
     // Crear un perfil 
     public function create(Perfil $perfil)
     {
-        $sql = "INSERT INTO perfiles (nombre) VALUES ('{$perfil->getNombre()}')";
-        $query = mysqli_query($this->conn,  $sql);
-
-        return $query === false ? mysqli_error($this->conn) : true;
+        try {
+            $sql = "INSERT INTO perfiles (nombre) VALUES ('{$perfil->getNombre()}')";
+            $result = mysqli_query($this->conn,  $sql);
+    
+            return $result;
+        }
+        catch (mysqli_sql_exception $e) {
+            return ValidarUtils::msjErrorBD($e);
+        }
     }
 
     public function update(Perfil $perfil)
     {
-        $sql = "UPDATE perfiles set nombre = '{$perfil->getNombre()}' where id = {$perfil->getId()}";
-        $query = mysqli_query($this->conn, $sql);
+        try {
+            $sql = "UPDATE perfiles set nombre = '{$perfil->getNombre()}' where id = {$perfil->getId()}";
+            $result = mysqli_query($this->conn, $sql);
 
-        return $query === false ? mysqli_error($this->conn) : true;
+            return $result;
+        }
+        catch (mysqli_sql_exception $e) {
+            return ValidarUtils::msjErrorBD($e);
+        }
     }
 
     public function delete(string $id)
     {
-        $sql = "DELETE FROM perfiles WHERE id = {$id}";
-        $query = mysqli_query($this->conn, $sql);
-
-        return $query === false ? mysqli_error($this->conn) : true;
+        try {
+            $sql = "DELETE FROM perfiles WHERE id = {$id}";
+            $result = mysqli_query($this->conn, $sql);
+    
+            return $result; // Devuelve true o false
+        }
+        catch (mysqli_sql_exception $e) {
+            return ValidarUtils::msjErrorBD($e);
+        }
     }
 }

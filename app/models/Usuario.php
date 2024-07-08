@@ -10,8 +10,8 @@ class Usuario {
     private string $password;
     private string $email;
     private string $direccion;
-    private \DateTime $fechaCreacion;
-    private \DateTime $fechaActualizacion;
+    private DateTime $fechaCreacion;
+    private DateTime $fechaActualizacion;
     private int $perfiles_id;
     private Perfil $perfil;
 

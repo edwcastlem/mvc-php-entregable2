@@ -64,8 +64,6 @@
 
         // Configuramos la acción de eliminar dentro del datatables
         configEliminar(idTabla, rutaDestroy);
-
-        $('#btnRegresar').click();
     </script>
 
 </body>

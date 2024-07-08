@@ -24,7 +24,7 @@
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="nombre">
                             Nombre
                         </label>
-                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="nombre" name="nombre" type="text" placeholder="Juan" value="<?php echo isset($usuario) ? $usuario->getNombre() : '' ?>">
                         <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
                     </div>
@@ -57,7 +57,7 @@
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="direccion">
                             Dirección
                         </label>
-                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="direccion" name="direccion" type="text" placeholder="Av. Perez 689" value="<?php echo isset($usuario) ? $usuario->getDireccion() : '' ?>">
                     </div>
                 </div>
@@ -96,7 +96,6 @@
                                 </svg>
                             </div>
                         </div>
-
                     </div>
                 </div>
 

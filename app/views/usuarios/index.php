@@ -58,7 +58,7 @@
         let rutaList = '<?php echo BASE_URL . "/usuarios/list/" ?>';
         let rutaEdit = ruta = '<?php echo BASE_URL . "/usuarios/edit/:id" ?>';
         let rutaDestroy = "<?php echo BASE_URL . '/usuarios/destroy/:id' ?>";
-
+        let rutaShow = "<?php echo BASE_URL . '/usuarios/show/:id' ?>";
 
         // Configuramos el datatables, el parametro Columns contiene las columnas del datatable
         configDatatables(idTabla, rutaList, [
@@ -71,7 +71,7 @@
             { data: 'direccion' },
             { data: 'fecha_creacion' },
             { data: 'fecha_actualizacion' }
-        ], [
+        ], false, [
             {
                 targets: [7,8],  // Coluumnas Fecha de creacion y actualizacion 
                 render: DataTable.render.datetime('DD/MM/YYYY HH:mm')
@@ -84,7 +84,8 @@
         // Configuramos la acción de eliminar dentro del datatables
         configEliminar(idTabla, rutaDestroy);
 
-        $('#btnRegresar').click();
+        // Configuramos la acción de ver dentro del datatables
+        configShow(idTabla, rutaShow);
     </script>
 
 </body>

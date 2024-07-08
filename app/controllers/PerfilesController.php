@@ -63,18 +63,18 @@ class PerfilesController extends Controller
             $perfil->setNombre($_POST['nombre']);
     
             $result = $perfilDAO->create($perfil);
-        }
 
-        if ($result) {
-            $respuesta = [
-                "success" => true,
-                "message" => "Perfil creado correctamente!"
-            ];
-        } else {
-            $respuesta = [
-                "success" => false,
-                "message" => "No se pudo crear el perfil! " . $result 
-            ];
+            if ($result === true) {
+                $respuesta = [
+                    "success" => true,
+                    "message" => "Perfil creado correctamente!"
+                ];
+            } else {
+                $respuesta = [
+                    "success" => false,
+                    "message" => "No se pudo crear el perfil! " . $result 
+                ];
+            }
         }
 
         header('Content-Type: application/json');
@@ -119,7 +119,8 @@ class PerfilesController extends Controller
         {
             $respuesta = [
                 "success" => false,
-                "message" => "ERROR: No se puedo actualizar. {$errores}"
+                "message" => "ERROR: Campos obligatorios no llenados.",
+                "errors" => $errores
             ];
         }
         else
@@ -132,22 +133,22 @@ class PerfilesController extends Controller
             $perfil->setNombre($request['nombre']);
     
             $result = $perfilDAO->update($perfil);
-        }
-    
-        // Verificamos si la respuesta tiene un error para mandar un codigo adecuado
-        if ($result)
-        {
-            $respuesta = [
-                "success" => true,
-                "message" => "Se actualizó con éxito"
-            ];
-        }
-        else
-        {
-            $respuesta = [
-                "success" => false,
-                "message" => "ERROR: No se pudo actualizar con éxito!!"
-            ];
+
+            // Verificamos si la respuesta tiene un error para mandar un codigo adecuado
+            if ($result === true)
+            {
+                $respuesta = [
+                    "success" => true,
+                    "message" => "Se actualizó con éxito"
+                ];
+            }
+            else
+            {
+                $respuesta = [
+                    "success" => false,
+                    "message" => "ERROR: No se pudo actualizar con éxito. " . $result
+                ];
+            }
         }
 
         // Enviamos la respuesta
@@ -164,7 +165,7 @@ class PerfilesController extends Controller
         $result = $perfilDAO->delete($id);
 
         // Verificamos si la respuesta tiene un error para mandar un codigo adecuado
-        if ( $result )
+        if ( $result === true )
         {
             $respuesta = [
                 "success" => true,
