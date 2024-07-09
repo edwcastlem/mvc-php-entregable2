@@ -184,4 +184,22 @@ class PerfilesController extends Controller
         header('Content-Type: application/json');
         echo json_encode($respuesta);
     }
+
+    public function show(string $id)
+    {
+        $perfilDAO = $this->loadModel('PerfilDAO');
+        $perfil = $perfilDAO->getPerfil($id);
+
+        if ( !empty($perfil) ) {
+            $usuarioDAO = $this->loadModel('UsuarioDAO');
+            $usuarios = $usuarioDAO->getUsuariosByPerfil($perfil->getId());
+
+            $this->loadView('perfiles/show', compact('perfil', 'usuarios'));
+        }
+        else {
+            $error = "No existe el perfil!!!";
+            $this->loadView('error', compact('error'));
+        }
+
+    }
 }

@@ -75,6 +75,32 @@ class UsuarioDAO
         return null;
     }
 
+    public function getUsuariosByPerfil(int $idPerfil): array {
+        $sql = "SELECT * FROM usuarios WHERE perfiles_id = {$idPerfil}";
+        $result = $this->conn->query($sql);
+
+        $usuarios = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $usuario = new Usuario();
+                $usuario->setId($row['id']);
+                $usuario->setNombre($row['nombre']);
+                $usuario->setApellido($row['apellido']);
+                $usuario->setDni($row['dni']);
+                $usuario->setEmail($row['email']);
+                $usuario->setDireccion($row['direccion']);
+                $usuario->setFechaCreacion(new DateTime($row['fecha_creacion']));
+                $usuario->setFechaActualizacion(new DateTime($row['fecha_actualizacion']));
+                $usuario->setPerfilesId($row['perfiles_id']);
+
+                $usuarios[] = $usuario;
+            }
+        }
+        
+        return $usuarios;
+    }
+
     public function loginUsuario(string $email, string $password): ?Usuario
     {
         $usuario = $this->getUsuarioByEmail($email);
@@ -98,7 +124,8 @@ class UsuarioDAO
     {
         try {
             $sql = "UPDATE usuarios SET 
-                    password = {$password}
+                    password = '{$password}',
+                    fecha_actualizacion = now()
                     WHERE email = '{$email}'";
     
             $result = mysqli_query($this->conn, $sql);

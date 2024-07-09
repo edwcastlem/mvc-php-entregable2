@@ -19,7 +19,7 @@
             <p class="text-white mx-2">Usuario: <?php echo LoginUtils::usuario()->getNombre() ?></p>
             <p class="text-white mx-2">Perfil: <?php echo LoginUtils::usuario()->getPerfil()->getNombre() ?></p>
             <p class="text-white mx-4">|</p>
-            <a class="text-white ml-2 py-2" href="<?php echo BASE_URL. '/login/cerrar_sesion' ?>">Cerrar sesión</a>
+            <a class="text-white ml-2 py-2 hover:text-gray-300" href="<?php echo BASE_URL. '/login/cerrar_sesion' ?>">Cerrar sesión</a>
             <?php } else { ?>
             <a href="<?php echo BASE_URL. '/login' ?>" class="text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 hover:bg-gray-700 focus:outline-none focus:ring-gray-800">Iniciar sesión</a>
             <?php } ?>

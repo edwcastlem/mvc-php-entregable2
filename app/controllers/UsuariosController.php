@@ -186,21 +186,30 @@ class UsuariosController extends Controller
     {
         // Verificamos si el usuario esta previamente logueado, sino redirigimos
         LoginUtils::requiereLogin();
-
-        $usuarioDAO = $this->loadModel('UsuarioDAO');
-
-        $result = $usuarioDAO->delete($id);
-
-        if ($result === true) {
-            $respuesta = [
-                "success" => true,
-                "message" => "Usuario eliminado con éxito!!!"
-            ];
-        } else {
+        
+        // No se permite eliminar al usuario logueado
+        if (LoginUtils::usuario()->getId() == $id) {
             $respuesta = [
                 "success" => false,
-                "message" => "ERROR: No se pudo eliminar. {$result}"
+                "message" => "ERROR: No se puede eliminar al usuario actual!!!"
             ];
+        }
+        else {
+            $usuarioDAO = $this->loadModel('UsuarioDAO');
+    
+            $result = $usuarioDAO->delete($id);
+    
+            if ($result === true) {
+                $respuesta = [
+                    "success" => true,
+                    "message" => "Usuario eliminado con éxito!!!"
+                ];
+            } else {
+                $respuesta = [
+                    "success" => false,
+                    "message" => "ERROR: No se pudo eliminar. {$result}"
+                ];
+            }
         }
 
         header('Content-Type: application/json');

@@ -51,6 +51,7 @@
         let rutaList = '<?php echo BASE_URL . "/perfiles/list/" ?>';
         let rutaEdit = ruta = '<?php echo BASE_URL . "/perfiles/edit/:id" ?>';
         let rutaDestroy = "<?php echo BASE_URL . '/perfiles/destroy/:id' ?>";
+        let rutaShow = "<?php echo BASE_URL . '/perfiles/show/:id' ?>";
 
 
         // Configuramos el datatables, el parametro Columns contiene las columnas del datatable
@@ -64,6 +65,9 @@
 
         // Configuramos la acción de eliminar dentro del datatables
         configEliminar(idTabla, rutaDestroy);
+
+        // Configuramos la acción de ver dentro del datatables
+        configShow(idTabla, rutaShow);
     </script>
 
 </body>
