@@ -2,9 +2,9 @@
 -- Bd gestion
 --
 
-CREATE DATABASE bdgestion;
+CREATE DATABASE bdentregable2;
 
-USE bdgestion;
+USE bdentregable2;
 
 CREATE TABLE perfiles (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -64,25 +64,12 @@ CREATE TABLE productos (
     FOREIGN KEY (proveedores_id) REFERENCES proveedores(id)
 );
 
--- Inserts iniciales
-
-INSERT INTO perfiles (nombre) 
-VALUES  ('Administración'), 
-        ('Usuario'), 
-        ('Vendedor');
-
-INSERT INTO categorias (nombre) 
-VALUES  ('Laptops'), 
-        ('Sobremesa'), 
-        ('Impresoras');
-
-
 -- Vistas
 CREATE or REPLACE VIEW listar_usuarios
 AS
     select u.id, p.nombre as perfil, u.nombre, u.apellido, u.dni, u.email, u.direccion, u.fecha_creacion, u.fecha_actualizacion
     from usuarios u
-    inner join perfiles p on u.perfiles_id = p.id
+    inner join perfiles p on u.perfiles_id = p.id;
 
 CREATE OR REPLACE VIEW listar_productos
 AS
@@ -93,20 +80,3 @@ AS
     inner join categorias c on p.categorias_id = c.id
     inner join proveedores pr on p.proveedores_id = pr.id
     inner join usuarios u on p.usuarios_id = u.id;
-
-
-                { data: 'id', visible: false },
-            { data: 'categorias_id', visible: false },
-            { data: 'categorias_nombre' },
-            { data: 'codigo' },
-            { data: 'nombre' },
-            { data: 'descripcion' },
-            { data: 'proveedores_id', visible: false },
-            { data: 'proveedores_nombre' },
-            { data: 'moneda' },
-            { data: 'precio_compra' },
-            { data: 'precio_venta' },
-            { data: 'usuarios_id', visible: false },
-            { data: 'usuarios_email' },
-            { data: 'fecha_creacion' },
-            { data: 'fecha_actualizacion' }

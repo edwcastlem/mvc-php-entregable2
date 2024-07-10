@@ -99,13 +99,13 @@
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="precio_compra">
                             Precio Compra
                         </label>
-                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="precio_compra" name="precio_compra" type="text" placeholder="125.00" value="<?php echo isset($producto) ? $producto->getPrecioCompra() : '' ?>">
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="precio_compra" name="precio_compra" type="number" placeholder="125.00" value="<?php echo isset($producto) ? $producto->getPrecioCompra() : '' ?>">
                     </div>
                     <div class="w-full px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="precio_venta">
                             Precio Venta
                         </label>
-                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="precio_venta" name="precio_venta" type="text" placeholder="130.00" value="<?php echo isset($producto) ? $producto->getPrecioVenta() : '' ?>">
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="precio_venta" name="precio_venta" type="number" placeholder="130.00" value="<?php echo isset($producto) ? $producto->getPrecioVenta() : '' ?>">
                     </div>
                 </div>
 

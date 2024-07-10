@@ -29,6 +29,19 @@ class ValidarUtils
         return $errores;
     }
 
+    public static function validarDNI(string $dni): Array {
+        $errores = [];
+        if (strlen($dni) != 8 ) {
+            $errores[] = "El DNI debe tener 8 caracteres!";
+        }
+
+        if (!is_numeric($dni)) {
+            $errores[] = "El DNI no debe tener letras!";
+        }
+
+        return $errores;
+    }
+
     // Reconocer errores de bd
     public static function msjErrorBD(mysqli_sql_exception $e)
     {

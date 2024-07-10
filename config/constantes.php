@@ -5,7 +5,7 @@ define('RAIZ', dirname(dirname(__FILE__)));
 define('BASE_URL', 'http://localhost/php-projects/entregable2');
 
 // Base de datos
-define('BD', 'bdgestion');
+define('BD', 'bdentregable2');
 define('HOST', 'localhost');
 define('USER', 'root');
 define('PASSWORD', '');

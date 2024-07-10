@@ -42,7 +42,7 @@
                             DNI
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="dni" name="dni" type="text" placeholder="88776655" value="<?php echo isset($usuario) ? $usuario->getDni() : '' ?>">
+                            id="dni" name="dni" type="text" pattern="\d{8}" title="El dni debe tener 8 dígitos" placeholder="88776655" value="<?php echo isset($usuario) ? $usuario->getDni() : '' ?>">
                     </div>
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
@@ -139,6 +139,14 @@
         $('#btnRegresar').on('click', function(event) {
             event.preventDefault();
             window.location.href = "<?php echo BASE_URL . '/usuarios' ?>";
+        });
+
+        // Validaciones
+        document.getElementById('dni').addEventListener('input', function (e) {
+            if (this.value.length > 8) {
+                this.value = this.value.slice(0, 8); // Limitar a 8 caracteres
+            }
+            this.value = this.value.replace(/[^0-9]/g, '');
         });
     </script>
 </body>

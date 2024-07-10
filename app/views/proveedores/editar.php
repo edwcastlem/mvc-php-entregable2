@@ -140,7 +140,7 @@
     <script>
         // Variables
         let idFormulario = "#proveedores_form";
-        let rutaStore = "<?php echo BASE_URL . '/proveedores/store' ?>";
+        let rutaStore = "<?php echo BASE_URL . '/proveedores/store/' ?>";
         let rutaUpdate = "<?php echo BASE_URL . '/proveedores/update/:id' ?>"; // marcador :id para reemplazarlo despues con js
 
         // Cargamos el select del banco
@@ -155,6 +155,32 @@
         $('#btnRegresar').on('click', function(event) {
             event.preventDefault();
             window.location.href = "<?php echo BASE_URL . '/proveedores' ?>";
+        });
+
+        // Validaciones
+
+        // ruc
+        $('#ruc').on('input', function (e) {
+            if (this.value.length > 11) {
+                this.value = this.value.slice(0, 11); // Limitar a 8 caracteres
+            }
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // telefono
+        $('#telefono').on('input', function (e) {
+            if (this.value.length > 15) {
+                this.value = this.value.slice(0, 15); // Limitar a 8 caracteres
+            }
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // celular
+        $('#celular').on('input', function (e) {
+            if (this.value.length > 15) {
+                this.value = this.value.slice(0, 15); // Limitar a 8 caracteres
+            }
+            this.value = this.value.replace(/[^0-9]/g, '');
         });
     </script>
 </body>

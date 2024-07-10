@@ -9,4 +9,9 @@ class PaginaController extends Controller
     {
         $this->loadView('index');
     }
+    public function cargarData()
+    {
+        // Datos de prueba
+        require_once 'database/cargardata.php';
+    }
 }
