@@ -2,7 +2,7 @@
 
 define('APP', dirname(dirname(__FILE__)) . '/app');
 define('RAIZ', dirname(dirname(__FILE__)));
-define('BASE_URL', 'http://localhost/php-projects/entregable2');
+//define('BASE_URL', 'http://localhost/entregable2'); // Se define esto en el index.php dinámicamente
 
 // Base de datos
 define('BD', 'bdentregable2');
