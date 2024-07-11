@@ -168,7 +168,7 @@ function cargarSelect(idSelect, ruta, idSeleccionado = "") {
  * alguna acción mediante este callback.
  *  
  */
-function configFormulario(idFormulario, rutaStore, rutaUpdate, accionesOkCallback = () => {})
+function configFormulario(idFormulario, rutaStore, rutaUpdate, accionesOkCallback = () => {}, accionesErrorCallback = () => {})
 {
     $(idFormulario).on("submit", function(event) {
         event.preventDefault();
@@ -201,14 +201,24 @@ function configFormulario(idFormulario, rutaStore, rutaUpdate, accionesOkCallbac
                         });
                 }
                 else {
-                    console.log(response);
                     Swal.fire({
                         title: 'Error',
                         text: response.message,
                         icon: 'error',
                     });
+                    // Cargamos los msjes de error con un callback desde cad avista
+                    accionesErrorCallback(response.errors);
                 }
             }
         });
     });
+}
+
+// funcion para limpiar y  poner los msjes d error
+function mostrarMsjes(errors) {
+    // Limpiamos los msjes si es q hay
+    $(`${idFormulario} p`).text('');
+    for(const {campo, msj} of errors) {
+        $(`#${campo} + p`).text(msj)
+    }
 }

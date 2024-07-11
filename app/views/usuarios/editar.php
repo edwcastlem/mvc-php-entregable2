@@ -26,7 +26,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="nombre" name="nombre" type="text" placeholder="Juan" value="<?php echo isset($usuario) ? $usuario->getNombre() : '' ?>">
-                        <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                     <div class="w-full md:w-1/2 px-3">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="apellido">
@@ -34,6 +34,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                             id="apellido" name="apellido" type="text" placeholder="Perez" value="<?php echo isset($usuario) ? $usuario->getApellido() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6">
@@ -43,6 +44,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="dni" name="dni" type="text" pattern="\d{8}" title="El dni debe tener 8 dígitos" placeholder="88776655" value="<?php echo isset($usuario) ? $usuario->getDni() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
@@ -50,6 +52,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="email" name="email" type="text" placeholder="jperez@gmail.com" value="<?php echo isset($usuario) ? $usuario->getEmail() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6">
@@ -59,6 +62,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="direccion" name="direccion" type="text" placeholder="Av. Perez 689" value="<?php echo isset($usuario) ? $usuario->getDireccion() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                 </div>
 
@@ -71,6 +75,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                             id="password" name="password" type="password" placeholder="**************" value="<?php echo isset($usuario) ? $usuario->getPassword() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                     <div class="w-full px-3">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="confirmacion_password">
@@ -78,6 +83,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                             id="confirmacion_password" name="confirmacion_password" type="password" placeholder="**************">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                 </div>
                 <?php } ?>
@@ -90,6 +96,7 @@
                         <div class="relative">
                             <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="perfiles_id" name="perfiles_id">
                             </select>
+                            <p class="text-red-500 text-xs italic"></p>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
@@ -134,7 +141,7 @@
         // Configuramos el formulario con el crear y actualizar
         configFormulario(idFormulario, rutaStore, rutaUpdate, function() {
             $('#btnRegresar').click();
-        });
+        }, mostrarMsjes);
 
         $('#btnRegresar').on('click', function(event) {
             event.preventDefault();

@@ -63,18 +63,18 @@ class CategoriasController extends Controller
             $categoria->setNombre($_POST['nombre']);
     
             $result = $categoriaDAO->create($categoria);
-        }
-
-        if ($result) {
-            $respuesta = [
-                "success" => true,
-                "message" => "Categoría creada correctamente!"
-            ];
-        } else {
-            $respuesta = [
-                "success" => false,
-                "message" => "No se pudo crear la categoría! " . $result 
-            ];
+            
+            if ($result) {
+                $respuesta = [
+                    "success" => true,
+                    "message" => "Categoría creada correctamente!"
+                ];
+            } else {
+                $respuesta = [
+                    "success" => false,
+                    "message" => "No se pudo crear la categoría! " . $result 
+                ];
+            }
         }
 
         header('Content-Type: application/json');

@@ -26,6 +26,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="ruc" name="ruc" type="text" placeholder="234234234210" value="<?php echo isset($proveedor) ? $proveedor->getRuc() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                     <div class="w-full md:w-1/2 px-3">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="razon_social">
@@ -33,6 +34,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                             id="razon_social" name="razon_social" type="text" placeholder="Tiendas ACME" value="<?php echo isset($proveedor) ? $proveedor->getRazonSocial() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                 </div>
 
@@ -43,6 +45,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="representante_legal" name="representante_legal" type="text" placeholder="Juan Perez" value="<?php echo isset($proveedor) ? $proveedor->getRepresentanteLegal() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
@@ -50,6 +53,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="email" name="email" type="text" placeholder="juan_perez@gmail.com" value="<?php echo isset($proveedor) ? $proveedor->getEmail() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                 </div>
 
@@ -60,6 +64,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="telefono" name="telefono" type="text" placeholder="01 432 1500" value="<?php echo isset($proveedor) ? $proveedor->getTelefono() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="celular">
@@ -67,6 +72,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="celular" name="celular" type="text" placeholder="999 200 400" value="<?php echo isset($proveedor) ? $proveedor->getCelular() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                 </div>
 
@@ -77,6 +83,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="direccion" name="direccion" type="text" placeholder="Av. Perez 689" value="<?php echo isset($proveedor) ? $proveedor->getDireccion() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                     <div class="w-full px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="cuenta_bancaria">
@@ -84,6 +91,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="cuenta_bancaria" name="cuenta_bancaria" type="text" placeholder="0011-34953495-13" value="<?php echo isset($proveedor) ? $proveedor->getCuentaBancaria() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                 </div>
 
@@ -94,6 +102,7 @@
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="cuenta_cci" name="cuenta_cci" type="text" placeholder="0011-34953495-13-2834" value="<?php echo isset($proveedor) ? $proveedor->getCuentaCci() : '' ?>">
+                        <p class="text-red-500 text-xs italic"></p>
                     </div>
                     <div class="w-full px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="banco">
@@ -107,6 +116,7 @@
                                 <option value="Scotiabank">Scotiabank</option>
                                 <option value="BBVA">BBVA</option>
                             </select>
+                            <p class="text-red-500 text-xs italic"></p>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
@@ -150,7 +160,7 @@
         // Configuramos el formulario con el crear y actualizar
         configFormulario(idFormulario, rutaStore, rutaUpdate, function() {
             $('#btnRegresar').click();
-        });
+        }, mostrarMsjes);
 
         $('#btnRegresar').on('click', function(event) {
             event.preventDefault();

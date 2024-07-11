@@ -22,12 +22,13 @@
                     <input id="nombre" name="nombre" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" 
                     type="text" placeholder="Nombre categoría" value="<?php echo isset($categoria) ? $categoria->getNombre() : '' ?>">
                     <button id="btnAgregar" class="flex-shrink-0 bg-gray-800 hover:bg-gray-600 border-gray-800 hover:border-gray-600 text-sm border-4 text-white py-1 px-2 rounded" type="submit">
-                    <?php echo isset($categoria) ? 'Actualizar' : 'Agregar' ?>
+                        <?php echo isset($categoria) ? 'Actualizar' : 'Agregar' ?>
                     </button>
                     <button id="btnRegresar" class="flex-shrink-0 border-transparent border-4 text-gray-800 hover:text-gray-800 text-sm py-1 px-2 rounded" type="button">
                         Regresar
                     </button>
                 </div>
+                <p class="text-red-500 text-xs italic"></p>
             </form>
         </div>
     </main>

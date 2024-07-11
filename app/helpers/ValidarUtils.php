@@ -11,19 +11,25 @@ class ValidarUtils
         {
             if ( isset($data[$campo]) && empty($data[$campo]) )
             {
-                $errores[] = "El campo {$campo} es obligatorio";
+                $errores[] = [
+                    "campo" => $campo,
+                    "msj" => "El campo {$campo} es obligatorio"
+                ];
             }
         }
 
         return $errores;
     }
 
-    public static function validarPrecioCompraventa(float $precioCompra, float $precioVenta): Array
+    public static function validarPrecioCompraventa($precioCompra, $precioVenta): Array
     {
         $errores = [];
 
         if ($precioCompra >= $precioVenta) {
-            $errores[] = "El precio de venta tiene que ser mayor que el precio de compra";
+            $errores[] = [
+                "campo" => 'precio_venta',
+                'msj' => "El precio de venta tiene que ser mayor que el precio de compra"
+            ];
         }
 
         return $errores;
@@ -32,11 +38,17 @@ class ValidarUtils
     public static function validarDNI(string $dni): Array {
         $errores = [];
         if (strlen($dni) != 8 ) {
-            $errores[] = "El DNI debe tener 8 caracteres!";
+            $errores[] =[
+                'campo' => 'dni',
+                'msj' => "El DNI debe tener 8 caracteres!"
+            ];
         }
 
         if (!is_numeric($dni)) {
-            $errores[] = "El DNI no debe tener letras!";
+            $errores[] = [
+                "campo" => 'dni',
+                "msj" => "El DNI no debe tener letras!"
+            ];
         }
 
         return $errores;
