@@ -8,7 +8,7 @@ USE bdentregable2;
 
 CREATE TABLE perfiles (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(30)
+    nombre VARCHAR(30) unique
 );
 
 CREATE TABLE usuarios (
@@ -27,7 +27,7 @@ CREATE TABLE usuarios (
 
 CREATE TABLE categorias (
     id INT PRIMARY KEY AUTO_INCREMENT, 
-    nombre VARCHAR(50)
+    nombre VARCHAR(50) unique
 );
 
 CREATE TABLE proveedores (
